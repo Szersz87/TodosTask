@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --deep-dark: rgb(26, 26, 26);
+    --light-dark: rgb(79, 82, 92);
+    --light-blue: rgb(0, 132, 255);
+    --dark-blue: rgb(2, 84, 161);
+    --light: rgb(245, 245, 245);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    margin-top: 120px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+}
+
+h1 {
+    font-size: 100px;
+    color: rgba(175, 47, 47, 0.15);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.fas {
+    pointer-events: none;
+}
+
+.todo {
+    width: 800px;
+    box-shadow: 4px 4px 5px rgba(82, 82, 82, .4);
+    text-align: center;
+    background-color: #d9cccc;
+}
+.todo-input {
+    width: 80%;
+    padding: 30px 40px;
+    margin-right: 20px;
+    font-size: 30px;
+    border: none;
+    color: rgba(175, 47, 47, 0.15);
+    background-color: white
+}
+.todolist {
+    padding: 20px 0;
+    
+}
+
+.todolist h3 {
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.todolist li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    padding: 30px 40px;
+    margin-left: 70px;
+    margin-right: 20px;
+    font-size: 30px;
+    text-align: center;
+    list-style: none;
+    background-color: white;
+}
+
+.tools {
+    display: inline-block;
+}
+
+.tools button {
+    padding: 15px 10px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+.complete {
+    color: white;
+}
+.delete {
+    font-size: 0px;
+    color: rgba(175, 47, 47, 0.15);
+}
+li:hover .delete{
+    font-size: 20px;
+}
+.editInfo {
+    color: rgba(175, 47, 47, 0.15);
+}
