@@ -59,6 +59,10 @@ h1 {
     border: solid;
     border-color: rgba(175, 47, 47, 0.15);
 }
+.complete1 {
+    font-size: 20px;
+    border-radius: 50%;
+}
 .tools {
     display: inline-block;
 }

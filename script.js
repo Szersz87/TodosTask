@@ -1,25 +1,16 @@
-let todoInput, newTodo, ulList, completeBtn, deleteBtn, allBtn, activeBtn,completedBtn, newTodos;
+let todoInput, newTodo, ulList, newTodos;
 
 const main = () => {
-    prepareDOMElements ()
-    prepareDOMEvents ()
+    prepareDOMElementsAndEvents ()
 }
-const prepareDOMElements = () => {
+const prepareDOMElementsAndEvents = () => {
     todoInput = document.querySelector('.todo-input')
-    // add = document.querySelector('.')
     ulList = document.querySelector('.todolist ul')
-    deleteBtn = document.querySelector('.delete')
-    completeBtn = document.querySelector('.complete')
-    allBtn = document.querySelector('.btn-all')
-    activeBtn = document.querySelector('.btn-active')
-    completedBtn = document.querySelector('.btn-completed')
+    todoInput.addEventListener('keyup', addNewTodo)
 }
-const prepareDOMEvents = () => {
-    todoInput.addEventListener('keyup', enterKeyCheck)
-}
-
-const addNewTodo = () => {
-    if (todoInput.value !== '') {
+// Dodajemy nowego todo jezeli input nie jest pusty i uzyjemy entera. tworzymy wtedy li z naszej ullisty i dodajemy do niej tekst ktory wpisalismy w inpucie. Nastepnie chcemy by ten tekst zniknal z inputa
+const addNewTodo = (e) => {
+    if (todoInput.value !== '' && e.key === 'Enter') {
         newTodo = document.createElement('li');
         newTodo.textContent = todoInput.value
         ulList.append(newTodo)
@@ -27,10 +18,6 @@ const addNewTodo = () => {
     }
 }
 
-const enterKeyCheck = e => {
-    if (e.key === 'Enter'){
-        addNewTodo()
-    }
-}
+
 
 document.addEventListener('DOMContentLoaded',main)
