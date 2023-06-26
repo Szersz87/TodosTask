@@ -3,7 +3,8 @@
     const todoInput = document.querySelector('.todo-input')
     const ulList = document.querySelector('.todolist ul')
     const deleteBtn = document.querySelector('.delete')
-    const complete = document.querySelector('.complete1')
+    // const circle = document.querySelector('.circle')
+    
     
     // This function adds new todo, after press enter. 
     const addNewTodo = (e) => {
@@ -20,20 +21,22 @@
     todoInput.addEventListener('keyup', addNewTodo)
     
 const createToolsArea = (newTodo) => {
-    const checkbox = document.createElement ('checkbox')
-    checkbox.classList.add('complete1')
-    newTodo.append(checkbox)
-    
+
     const toolsPanel = document.createElement ('div')
     toolsPanel.classList.add('tools')
     newTodo.append(toolsPanel)
+    
+    const checkBox = document.createElement ('circle')
+    checkBox.classList.add('circle')
+
+    const textArea = document.createElement ('textArea')
     
     const deleteBtn = document.createElement ('button')
     deleteBtn.classList.add('delete')
     deleteBtn.innerHTML = '<i class="fas fa-times"></i>'
     
-    toolsPanel.append(deleteBtn)
-    checkbox.append(complete)
+    toolsPanel.append(checkBox, textArea, deleteBtn)
+    
 }
 
 

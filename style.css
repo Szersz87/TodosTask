@@ -38,8 +38,7 @@ h1 {
     padding: 20px 0;  
 }
 .todolist li {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
     align-items: center;
     width: 80%;
     padding: 30px 40px;
@@ -59,12 +58,10 @@ h1 {
     border: solid;
     border-color: rgba(175, 47, 47, 0.15);
 }
-.complete1 {
-    font-size: 20px;
-    border-radius: 50%;
-}
 .tools {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 .tools button {
     padding: 15px 10px;
