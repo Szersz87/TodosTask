@@ -20,7 +20,8 @@
     // prepare DOM event
     todoInput.addEventListener('keyup', addNewTodo)
     
-const createToolsArea = (newTodo) => {
+    
+    const createToolsArea = (newTodo) => {
 
     const toolsPanel = document.createElement ('div')
     toolsPanel.classList.add('tools')
@@ -38,6 +39,17 @@ const createToolsArea = (newTodo) => {
     toolsPanel.append(checkBox, textArea, deleteBtn)
     
 }
+// creat function to make our toolPanel used
+const checkClick = e => {
+    // if we click circle we will add class complited
+    if(e.target.matches('.circle')){
+    e.target.closest('li').classList.toggle('complited')
+}else if(e.target.matches('.textArea')) {
+    console.log('edit');
+}else if(e.target.matches('.delete')){
+    console.log('delete');
+}
+}
+ulList.addEventListener('click', checkClick)
 
 
-document.addEventListener('DOMContentLoaded')
