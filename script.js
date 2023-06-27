@@ -4,6 +4,7 @@
     const ulList = document.querySelector('.todolist ul')
     const deleteBtn = document.querySelector('.delete')
     // const circle = document.querySelector('.circle')
+    // const toolsPanel = document.querySelector('.tools')
     
     
     // This function adds new todo, after press enter. 
@@ -20,25 +21,23 @@
     // prepare DOM event
     todoInput.addEventListener('keyup', addNewTodo)
     
-    
-    const createToolsArea = (newTodo) => {
+    const createElementWithClass = (type, className) => {
+                const element = document.createElement(type);
+                element.classList.add(className);
+                return element;
+            }
 
-    const toolsPanel = document.createElement ('div')
-    toolsPanel.classList.add('tools')
-    newTodo.append(toolsPanel)
-    
-    const checkBox = document.createElement ('circle')
-    checkBox.classList.add('circle')
-
-    const textArea = document.createElement ('textArea')
-    
-    const deleteBtn = document.createElement ('button')
-    deleteBtn.classList.add('delete')
-    deleteBtn.innerHTML = '<i class="fas fa-times"></i>'
-    
-    toolsPanel.append(checkBox, textArea, deleteBtn)
-    
-}
+        const createToolsArea = (newTodo) => {
+                const toolsPanel = createElementWithClass('div', 'tools');
+                const checkBox = createElementWithClass('circle', 'circle');
+                const textArea = createElementWithClass('textArea', 'textArea');
+                const deleteBtn = createElementWithClass('button', 'delete');
+                deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+        
+                toolsPanel.append(checkBox, textArea, deleteBtn);
+                newTodo.append(toolsPanel);
+        
+        }
 // creat function to make our toolPanel used
 const checkClick = e => {
     // if we click circle we will add class complited
