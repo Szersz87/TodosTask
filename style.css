@@ -3,15 +3,6 @@
     margin: 0;
     padding: 0;
 }
-
-:root {
-    --deep-dark: rgb(26, 26, 26);
-    --light-dark: rgb(79, 82, 92);
-    --light-blue: rgb(0, 132, 255);
-    --dark-blue: rgb(2, 84, 161);
-    --light: rgb(245, 245, 245);
-}
-
 body {
     display: flex;
     justify-content: center;
@@ -19,18 +10,15 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: white;
 }
-
 h1 {
     font-size: 100px;
     color: rgba(175, 47, 47, 0.15);
     margin-bottom: 20px;
     text-transform: uppercase;
 }
-
 .fas {
     pointer-events: none;
 }
-
 .todo {
     width: 800px;
     box-shadow: 4px 4px 5px rgba(82, 82, 82, .4);
@@ -47,15 +35,8 @@ h1 {
     background-color: white
 }
 .todolist {
-    padding: 20px 0;
-    
+    padding: 20px 0;  
 }
-
-.todolist h3 {
-    text-transform: uppercase;
-    margin-bottom: 16px;
-}
-
 .todolist li {
     display: flex;
     justify-content: space-between;
@@ -69,20 +50,31 @@ h1 {
     list-style: none;
     background-color: white;
 }
-
+.circle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: solid;
+    border-color: rgba(175, 47, 47, 0.15);
+}
+.complete1 {
+    font-size: 20px;
+    border-radius: 50%;
+}
 .tools {
     display: inline-block;
 }
-
 .tools button {
     padding: 15px 10px;
+    background-color: white;
     border: none;
-    background-color: transparent;
     cursor: pointer;
-    transition: background-color .3s;
 }
 .complete {
-    color: white;
+    font-size: 20px;
+    color: rgba(175, 47, 47, 0.15);
 }
 .delete {
     font-size: 0px;
