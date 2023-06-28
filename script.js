@@ -10,11 +10,9 @@
     // This function adds new todo, after press enter. 
     const addNewTodo = (e) => {
         if (todoInput.value !== '' && e.key === 'Enter') {
-            const newTodo = document.createElement('li');
-            newTodo.textContent = todoInput.value
-            // its should add checkbox and deleteBtn
-            createToolsArea(newTodo)
-             ulList.append(newTodo)
+            const newLi = document.createElement('li');
+            createToolsArea(newLi, todoInput.value)
+             ulList.append(newLi)
             todoInput.value = ''
         }
     }
@@ -27,28 +25,34 @@
                 return element;
             }
 
-        const createToolsArea = (newTodo) => {
+        const createToolsArea = (newTodo, text) => {
+
                 const toolsPanel = createElementWithClass('div', 'tools');
                 const checkBox = createElementWithClass('circle', 'circle');
-                const textArea = createElementWithClass('textArea', 'textArea');
+                const textArea = createElementWithClass('p', 'textArea');
                 const deleteBtn = createElementWithClass('button', 'delete');
                 deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-        
+        textArea.textContent = text
                 toolsPanel.append(checkBox, textArea, deleteBtn);
                 newTodo.append(toolsPanel);
         
         }
-// creat function to make our toolPanel used
+
 const checkClick = e => {
-    // if we click circle we will add class complited
-    if(e.target.matches('.circle')){
-    e.target.closest('li').classList.toggle('complited')
-}else if(e.target.matches('.textArea')) {
-    console.log('edit');
-}else if(e.target.matches('.delete')){
-    console.log('delete');
+    
+switch (e.target){
+
+case document.querySelector('.circle'):
+    e.target.closest('li').classList.toggle('complited');
+    break;
+    case document.querySelector('.delete'):
+        console.log('delete');
+        break;
+    case document.querySelector('.textArea'):
+        console.log('nothing');
 }
 }
+
 ulList.addEventListener('click', checkClick)
 
 
