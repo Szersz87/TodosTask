@@ -2,9 +2,9 @@
 // prepare DOM Elements
     const todoInput = document.querySelector('.todo-input')
     const ulList = document.querySelector('.todolist ul')
-    const deleteBtn = document.querySelector('.delete')
+    // const deleteBtn = document.querySelector('.delete')
     // const circle = document.querySelector('.circle')
-    // const toolsPanel = document.querySelector('.tools')
+    // const check = document.querySelector('.fas fa-check')
     
     
     // This function adds new todo, after press enter. 
@@ -35,24 +35,48 @@
         textArea.textContent = text
                 toolsPanel.append(checkBox, textArea, deleteBtn);
                 newTodo.append(toolsPanel);
-        
         }
-
+// funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
+const handleDoubleClick = (e) => {
+            const listItem = e.target.closest('li');
+            const checkBox = listItem.querySelector('.circle');
+            const textArea = listItem.querySelector('.textArea');
+          
+            if (e.target.classList.contains('textArea')) {
+              textArea.contentEditable = true;
+              textArea.focus();
+            }
+          };
+        //   funkcja zamykania okna edycji po kliknieciu entera
+ const handleKeyDown = (e) => {
+         const textArea = e.target.closest('.textArea');
+            if (e.key === 'Enter' && textArea && textArea.contentEditable === 'true') {
+              e.preventDefault();
+              textArea.contentEditable = false;
+            }
+          };
 const checkClick = e => {
-    
-switch (e.target){
-
-case document.querySelector('.circle'):
-    e.target.closest('li').classList.toggle('complited');
-    break;
-    case document.querySelector('.delete'):
-        console.log('delete');
-        break;
-    case document.querySelector('.textArea'):
-        console.log('nothing');
+    const listItem = e.target.closest('li');
+    const checkBox = listItem.querySelector('.circle');
+    const textArea = listItem.querySelector('.textArea');
+  
+    switch (true) {
+        // jesli klikniemy na diva circle dodamy mu ikonke checked, a textarea otrzyma style comleted
+        case e.target.classList.contains('circle'):
+            listItem.classList.toggle('completed');
+            if (listItem.classList.contains('completed')) {
+                checkBox.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                checkBox.innerHTML = '';
+            }
+            break;
+        case e.target.classList.contains('delete'):
+            e.target.closest('li').remove();
+            break;
+    }
 }
-}
 
-ulList.addEventListener('click', checkClick)
-
+ulList.addEventListener('click', checkClick);
+ulList.addEventListener('dblclick', handleDoubleClick);
+ulList.addEventListener('keydown', handleKeyDown);
 
