@@ -1,11 +1,7 @@
 
 // prepare DOM Elements
-    const todoInput = document.querySelector('.todo-input')
-    const ulList = document.querySelector('.todolist ul')
-    // const deleteBtn = document.querySelector('.delete')
-    // const circle = document.querySelector('.circle')
-    // const check = document.querySelector('.fas fa-check')
-    
+    const todoInput = document.querySelector('.todo-input');
+    const ulList = document.querySelector('.todolist ul');
     
     // This function adds new todo, after press enter. 
     const addNewTodo = (e) => {
@@ -28,7 +24,7 @@
         const createToolsArea = (newTodo, text) => {
 
                 const toolsPanel = createElementWithClass('div', 'tools');
-                const checkBox = createElementWithClass('circle', 'circle');
+                const checkBox = createElementWithClass('div', 'circle');
                 const textArea = createElementWithClass('p', 'textArea');
                 const deleteBtn = createElementWithClass('button', 'delete');
                 deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
@@ -56,10 +52,10 @@ const handleDoubleClick = (e) => {
             }
           };
 const checkClick = e => {
+    
     const listItem = e.target.closest('li');
     const checkBox = listItem.querySelector('.circle');
     const textArea = listItem.querySelector('.textArea');
-  
     switch (true) {
         // jesli klikniemy na diva circle dodamy mu ikonke checked, a textarea otrzyma style comleted
         case e.target.classList.contains('circle'):
@@ -79,4 +75,24 @@ const checkClick = e => {
 ulList.addEventListener('click', checkClick);
 ulList.addEventListener('dblclick', handleDoubleClick);
 ulList.addEventListener('keydown', handleKeyDown);
-
+// przygotowanie przycisków do uzycia
+const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed');
+// funkcja sprawdza czy w konsoli beda wyswietlac sie przyciski
+const handleClick = (e) => {
+  const clickedButton = e.target;
+  
+  if (clickedButton.classList.contains('btn-all')) {
+    console.log('Clicked btn-all');
+    
+  } else if (clickedButton.classList.contains('btn-active')) {
+    console.log('Clicked btn-active');
+    
+  } else if (clickedButton.classList.contains('btn-completed')) {
+    console.log('Clicked btn-completed');
+    
+  }
+};
+// nasluchujemy na wszystkie przyciski z footera
+buttons.forEach(button => {
+  button.addEventListener('click', handleClick);
+});
