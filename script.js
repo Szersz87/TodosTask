@@ -2,6 +2,8 @@
 // prepare DOM Elements
     const todoInput = document.querySelector('.todo-input');
     const ulList = document.querySelector('.todolist ul');
+    const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed');
+    const todoItems = document.querySelectorAll('.todolist ul li');
     
     // This function adds new todo, after press enter. 
     const addNewTodo = (e) => {
@@ -75,24 +77,60 @@ const checkClick = e => {
 ulList.addEventListener('click', checkClick);
 ulList.addEventListener('dblclick', handleDoubleClick);
 ulList.addEventListener('keydown', handleKeyDown);
-// przygotowanie przycisków do uzycia
-const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed');
-// funkcja sprawdza czy w konsoli beda wyswietlac sie przyciski
+
+
 const handleClick = (e) => {
   const clickedButton = e.target;
-  
-  if (clickedButton.classList.contains('btn-all')) {
-    console.log('Clicked btn-all');
-    
-  } else if (clickedButton.classList.contains('btn-active')) {
-    console.log('Clicked btn-active');
-    
-  } else if (clickedButton.classList.contains('btn-completed')) {
-    console.log('Clicked btn-completed');
-    
+
+  switch (true) {
+    case clickedButton.classList.contains("btn-all"):
+      showAllTodos();
+      break;
+    case clickedButton.classList.contains("btn-active"):
+      showActiveTodos();
+      break;
+    case clickedButton.classList.contains("btn-completed"):
+      showCompletedTodos();
+      break;
+    default:
+      break;
   }
 };
-// nasluchujemy na wszystkie przyciski z footera
-buttons.forEach(button => {
-  button.addEventListener('click', handleClick);
+
+buttons.forEach((button) => {
+  button.addEventListener("click", handleClick);
 });
+
+// shows all todos
+const showAllTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    item.style.display = "block";
+  });
+};
+
+// shows todos without class completed
+const showActiveTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    if (!item.classList.contains("completed")) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+};
+
+// shows todos with class completed
+const showCompletedTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    if (item.classList.contains("completed")) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+};
+
+
