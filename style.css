@@ -111,4 +111,9 @@ li:hover .delete{
     width: 5rem;
     padding: 0.2rem;
 }
-
+.btn-deleteAllCompleted {
+    /* display: none; */
+    margin-left: 4rem;
+    width: 5rem;
+    padding: 0.2rem;  
+}

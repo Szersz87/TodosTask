@@ -2,7 +2,7 @@
 // prepare DOM Elements
     const todoInput = document.querySelector('.todo-input');
     const ulList = document.querySelector('.todolist ul');
-    const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed');
+    const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed, .btn-deleteAllCompleted');
     const todoItems = document.querySelectorAll('.todolist ul li');
     
     // This function adds new todo, after press enter. 
@@ -34,6 +34,7 @@
                 toolsPanel.append(checkBox, textArea, deleteBtn);
                 newTodo.append(toolsPanel);
         }
+
 // funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
 const handleDoubleClick = (e) => {
             const listItem = e.target.closest('li');
@@ -92,6 +93,9 @@ const handleClick = (e) => {
     case clickedButton.classList.contains("btn-completed"):
       showCompletedTodos();
       break;
+    case clickedButton.classList.contains("btn-deleteAllCompleted"):
+      deleteCompletedTodos();
+      break;
     default:
       break;
   }
@@ -132,5 +136,19 @@ const showCompletedTodos = () => {
     }
   });
 };
+// delete all completed todos
+const deleteCompletedTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  
+
+  todoItems.forEach((item) => {
+    if (item.classList.contains("completed")) {
+      item.remove();
+      
+    } else {
+      item.style.display = "block";
+    }
+  });
+}
 
 
