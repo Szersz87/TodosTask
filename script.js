@@ -96,11 +96,11 @@ const handleClick = (e) => {
     case clickedButton.classList.contains("btn-deleteAllCompleted"):
       deleteCompletedTodos();
       break;
-    default:
-      break;
-  }
-};
-
+      default:
+        break;
+      }
+    };
+    
 buttons.forEach((button) => {
   button.addEventListener("click", handleClick);
 });
@@ -136,19 +136,31 @@ const showCompletedTodos = () => {
     }
   });
 };
+
+
 // delete all completed todos
 const deleteCompletedTodos = () => {
   const todoItems = document.querySelectorAll('.todolist ul li');
-  
 
   todoItems.forEach((item) => {
     if (item.classList.contains("completed")) {
       item.remove();
-      
-    } else {
-      item.style.display = "block";
+      } else {
+        item.style.display = "block";
     }
   });
+  deleteCompletedButtonVisibility();
 }
+// show deleteAll button when something will be completed
+const deleteCompletedButtonVisibility = () => {
+  const deleteButton = document.querySelector('.btn-deleteAllCompleted');
+  const completedTodos = document.querySelectorAll('.completed');
+
+  if (completedTodos.length > 0) {
+    deleteButton.style.display = 'block';
+  } else {
+    deleteButton.style.display = 'none';
+  }
+};
 
 
