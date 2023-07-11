@@ -91,11 +91,30 @@ li:hover .delete{
     font-size: 1.2rem;
 }
 .editInfo {
+    margin: 2rem;
     color: var(--main-color);
 }
 .completed {
     font-size: 1rem;
     color: #d9d9d9;
     text-decoration: line-through;
+}
+.btn-all {
+    width: 5rem;
+    padding: 0.2rem;
+}
+.btn-active {
+    width: 5rem;
+    padding: 0.2rem;
+}
+.btn-completed {
+    width: 5rem;
+    padding: 0.2rem;
+}
+.btn-deleteAllCompleted {
+    display: none;
+    margin-left: 2rem;
+    width: 5rem;
+    padding: 0.2rem;  
 }
 
