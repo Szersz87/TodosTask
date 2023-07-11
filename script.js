@@ -1,5 +1,5 @@
-
 // prepare DOM Elements
+
     const todoInput = document.querySelector('.todo-input');
     const ulList = document.querySelector('.todolist ul');
     const buttons = document.querySelectorAll('.btn-all, .btn-active, .btn-completed, .btn-deleteAllCompleted');
@@ -162,5 +162,3 @@ const deleteCompletedButtonVisibility = () => {
     deleteButton.style.display = 'none';
   }
 };
-
-
