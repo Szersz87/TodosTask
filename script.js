@@ -7,15 +7,17 @@
     
     // This function adds new todo, after press enter. 
     const addNewTodo = (e) => {
-        if (todoInput.value !== '' && e.key === 'Enter') {
+      if (todoInput.value !== '' && e.key === 'Enter') {
             const newTodo = document.createElement('li');
             newTodo.textContent = todoInput.value
+            tasks.push(todoInput.value);
             // its should add checkbox and deleteBtn
             createToolsArea(newTodo)
-             ulList.append(newTodo)
+            ulList.append(newTodo)
             todoInput.value = ''
         }
-    }
+      }
+      const tasks = [];
     // prepare DOM event
     todoInput.addEventListener('keyup', addNewTodo)
     
@@ -110,6 +112,5 @@ const deleteCompletedTodos = () => {
     }
   });
 };
-
 
 
