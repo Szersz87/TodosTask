@@ -36,5 +36,80 @@ const createToolsArea = (newTodo) => {
     checkbox.append(complete)
 }
 
+ulList.addEventListener('click', checkClick);
+ulList.addEventListener('dblclick', handleDoubleClick);
+ulList.addEventListener('keydown', handleKeyDown);
 
-document.addEventListener('DOMContentLoaded')
+
+const handleClick = (e) => {
+  const clickedButton = e.target;
+
+  switch (true) {
+    case clickedButton.classList.contains("btn-all"):
+      showAllTodos();
+      break;
+    case clickedButton.classList.contains("btn-active"):
+      showActiveTodos();
+      break;
+    case clickedButton.classList.contains("btn-completed"):
+      showCompletedTodos();
+      break;
+    case clickedButton.classList.contains("btn-deleteAllCompleted"):
+      deleteCompletedTodos();
+      break;
+      default:
+        break;
+      }
+    };
+    
+buttons.forEach((button) => {
+  button.addEventListener("click", handleClick);
+});
+
+// shows all todos
+const showAllTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    item.style.display = "block";
+  });
+};
+
+// shows todos without class completed
+const showActiveTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    if (!item.classList.contains("completed")) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+};
+
+// shows todos with class completed
+const showCompletedTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+  todoItems.forEach((item) => {
+    if (item.classList.contains("completed")) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+};
+
+// delete all completed todos
+const deleteCompletedTodos = () => {
+  const todoItems = document.querySelectorAll('.todolist ul li');
+
+  todoItems.forEach((item) => {
+    if (item.classList.contains("completed")) {
+      item.remove();
+    } else {
+      item.style.display = "block";
+    }
+  });
+};
+
+
+
