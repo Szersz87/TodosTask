@@ -5,29 +5,23 @@ const ulList = document.querySelector(".todolist ul");
 const buttons = document.querySelectorAll(
   ".btn-all, .btn-active, .btn-completed, .btn-deleteAllCompleted"
 );
-const todoItems = document.querySelectorAll(".todolist ul li");
+const getTodoItems = () => document.querySelectorAll(".todolist ul li");
 
-const tasks = [
-  {
-    id: 1,
-    text: "task1",
-    status: "created",
-  },
-];
+const tasks = [];
 
 // This function adds new todo, after press enter.
 const addNewTodo = (e) => {
   if (todoInput.value !== "" && e.key === "Enter") {
     const newTodo = {
-      id: tasks.length + 1,
+      id: new Date().valueOf(),
       text: todoInput.value,
       status: "created",
     };
 
     tasks.push(newTodo);
-    console.log(tasks)
+    console.log(tasks);
     const newLi = document.createElement("li");
-    createToolsArea(newLi, newTodo.text);
+    createTodosArea(newLi, newTodo.text, newTodo.id);
     ulList.append(newLi);
     todoInput.value = "";
   }
@@ -41,7 +35,7 @@ const createElementWithClass = (type, className) => {
   return element;
 };
 
-const createToolsArea = (newTodo, text) => {
+const createTodosArea = (newTodo, text, id) => {
   const toolsPanel = createElementWithClass("div", "tools");
   const checkBox = createElementWithClass("div", "circle");
   const textArea = createElementWithClass("p", "textArea");
@@ -50,6 +44,18 @@ const createToolsArea = (newTodo, text) => {
   textArea.textContent = text;
   toolsPanel.append(checkBox, textArea, deleteBtn);
   newTodo.append(toolsPanel);
+
+  deleteBtn.addEventListener("click", () => {
+    deleteTodoAndElement(id, newTodo);
+  });
+};
+const deleteTodoAndElement = (id, element) => {
+  const index = tasks.findIndex((todo) => todo.id === id);
+  if (index !== -1) {
+    tasks.splice(index, 1);
+    console.log(tasks);
+    element.remove();
+  }
 };
 
 // funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
@@ -76,7 +82,6 @@ const checkClick = (e) => {
   const checkBox = listItem.querySelector(".circle");
   const textArea = listItem.querySelector(".textArea");
   switch (true) {
-    // jesli klikniemy na diva circle dodamy mu ikonke checked, a textarea otrzyma style comleted
     case e.target.classList.contains("circle"):
       listItem.classList.toggle("completed");
       if (listItem.classList.contains("completed")) {
@@ -85,8 +90,9 @@ const checkClick = (e) => {
         checkBox.innerHTML = "";
       }
       break;
-    case e.target.classList.contains("delete"):
-      e.target.closest("li").remove();
+      case e.target.classList.contains("delete"):
+        const todoId = listItem.dataset.id;
+        deleteTodoAndElement(todoId, listItem);
       break;
   }
 };
