@@ -27,7 +27,6 @@ const addNewTodo = (e) => {
   }
 };
 
-
 const createElementWithClass = (type, className) => {
   const element = document.createElement(type);
   element.classList.add(className);
@@ -41,9 +40,11 @@ const createTodosArea = (newTodo, text, id) => {
   const deleteBtn = createElementWithClass("button", "delete");
   deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
   textArea.textContent = text;
+  textArea.addEventListener("dblclick", handleDoubleClick);
+  textArea.addEventListener("keydown", handleEditKeyDown);
   toolsPanel.append(checkBox, textArea, deleteBtn);
   newTodo.append(toolsPanel);
-
+  
   deleteBtn.addEventListener("click", () => {
     deleteTodoAndElement(id, newTodo);
   });
@@ -52,35 +53,56 @@ const deleteTodoAndElement = (id, element) => {
   const index = tasks.findIndex((todo) => todo.id === id);
   if (index !== -1) {
     tasks.splice(index, 1);
-    console.log(tasks);
     element.remove();
   }
 };
 
-// funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
+
+let isEditing = false;
+
 const handleDoubleClick = (e) => {
   const listItem = e.target.closest("li");
   const checkBox = listItem.querySelector(".circle");
   const textArea = listItem.querySelector(".textArea");
-
-  if (e.target.classList.contains("textArea")) {
+  
+  if (e.target.classList.contains("textArea") && !isEditing) {
+    isEditing = true;
     textArea.contentEditable = true;
     textArea.focus();
   }
 };
 //   funkcja zamykania okna edycji po kliknieciu entera
-const handleKeyDown = (e) => {
+const handleEditKeyDown = (e) => {
   const textArea = e.target.closest(".textArea");
-  if (e.key === "Enter" && textArea && textArea.contentEditable === "true") {
+  
+  if (e.key === "Enter") {
     e.preventDefault();
     textArea.contentEditable = false;
+    // blur, metoda ktora wymusza utrate focusu na elemencie
+    textArea.blur();
+    
+    const listItem = textArea.closest("li");
+    const todoId = listItem.dataset.id;
+    const index = tasks.findIndex((todo) => todo.id === todoId);
+    if (index !== -1) {
+      tasks[index].text = textArea.textContent;
+      console.log(tasks);
+    }
+    isEditing = false;
+    
   }
 };
+ulList.addEventListener("keydown", (e) => {
+  if (isEditing) {
+    handleEditKeyDown(e);
+  }
+});
+
 const checkClick = (e) => {
   const listItem = e.target.closest("li");
   const checkBox = listItem.querySelector(".circle");
   const textArea = listItem.querySelector(".textArea");
-  
+
   switch (true) {
     case e.target.classList.contains("circle"):
       listItem.classList.toggle("completed");
@@ -90,37 +112,35 @@ const checkClick = (e) => {
         checkBox.innerHTML = "";
       }
       break;
-      case e.target.classList.contains("delete"):
-        const todoId = listItem.dataset.id;
-        deleteTodoAndElement(todoId, listItem);
-        break;
-      }
+    case e.target.classList.contains("delete"):
+      const todoId = listItem.dataset.id;
+      deleteTodoAndElement(todoId, listItem);
+      break;
+  }
 };
-
 
 const handleClick = (e) => {
   const clickedButton = e.target;
-  
+
   switch (true) {
     case clickedButton.classList.contains("btn-all"):
       showAllTodos();
       break;
-      case clickedButton.classList.contains("btn-active"):
+    case clickedButton.classList.contains("btn-active"):
       showActiveTodos();
       break;
-      case clickedButton.classList.contains("btn-completed"):
+    case clickedButton.classList.contains("btn-completed"):
       showCompletedTodos();
       break;
-      case clickedButton.classList.contains("btn-deleteAllCompleted"):
-        deleteCompletedTodos();
-        break;
-        default:
-          break;
-        }
-      };
+    case clickedButton.classList.contains("btn-deleteAllCompleted"):
+      deleteCompletedTodos();
+      break;
+    default:
+      break;
+  }
+};
 
-      
-      // shows all todos
+// shows all todos
 const showAllTodos = () => {
   const todoItems = getTodoItems();
   todoItems.forEach((item) => {
@@ -155,7 +175,7 @@ const showCompletedTodos = () => {
 // delete all completed todos
 const deleteCompletedTodos = () => {
   const todoItems = getTodoItems();
-  
+
   todoItems.forEach((item) => {
     if (item.classList.contains("completed")) {
       item.remove();
@@ -168,7 +188,7 @@ const deleteCompletedTodos = () => {
 todoInput.addEventListener("keyup", addNewTodo);
 ulList.addEventListener("click", checkClick);
 ulList.addEventListener("dblclick", handleDoubleClick);
-ulList.addEventListener("keydown", handleKeyDown);
+// ulList.addEventListener("keydown", handleKeyDown);
 buttons.forEach((button) => {
   button.addEventListener("click", handleClick);
 });
