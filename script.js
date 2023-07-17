@@ -26,8 +26,7 @@ const addNewTodo = (e) => {
     todoInput.value = "";
   }
 };
-// prepare DOM event
-todoInput.addEventListener("keyup", addNewTodo);
+
 
 const createElementWithClass = (type, className) => {
   const element = document.createElement(type);
@@ -81,6 +80,7 @@ const checkClick = (e) => {
   const listItem = e.target.closest("li");
   const checkBox = listItem.querySelector(".circle");
   const textArea = listItem.querySelector(".textArea");
+  
   switch (true) {
     case e.target.classList.contains("circle"):
       listItem.classList.toggle("completed");
@@ -93,42 +93,36 @@ const checkClick = (e) => {
       case e.target.classList.contains("delete"):
         const todoId = listItem.dataset.id;
         deleteTodoAndElement(todoId, listItem);
-      break;
-  }
+        break;
+      }
 };
 
-ulList.addEventListener("click", checkClick);
-ulList.addEventListener("dblclick", handleDoubleClick);
-ulList.addEventListener("keydown", handleKeyDown);
 
 const handleClick = (e) => {
   const clickedButton = e.target;
-
+  
   switch (true) {
     case clickedButton.classList.contains("btn-all"):
       showAllTodos();
       break;
-    case clickedButton.classList.contains("btn-active"):
+      case clickedButton.classList.contains("btn-active"):
       showActiveTodos();
       break;
-    case clickedButton.classList.contains("btn-completed"):
+      case clickedButton.classList.contains("btn-completed"):
       showCompletedTodos();
       break;
-    case clickedButton.classList.contains("btn-deleteAllCompleted"):
-      deleteCompletedTodos();
-      break;
-    default:
-      break;
-  }
-};
+      case clickedButton.classList.contains("btn-deleteAllCompleted"):
+        deleteCompletedTodos();
+        break;
+        default:
+          break;
+        }
+      };
 
-buttons.forEach((button) => {
-  button.addEventListener("click", handleClick);
-});
-
-// shows all todos
+      
+      // shows all todos
 const showAllTodos = () => {
-  const todoItems = document.querySelectorAll(".todolist ul li");
+  const todoItems = getTodoItems();
   todoItems.forEach((item) => {
     item.style.display = "block";
   });
@@ -136,7 +130,7 @@ const showAllTodos = () => {
 
 // shows todos without class completed
 const showActiveTodos = () => {
-  const todoItems = document.querySelectorAll(".todolist ul li");
+  const todoItems = getTodoItems();
   todoItems.forEach((item) => {
     if (!item.classList.contains("completed")) {
       item.style.display = "block";
@@ -148,7 +142,7 @@ const showActiveTodos = () => {
 
 // shows todos with class completed
 const showCompletedTodos = () => {
-  const todoItems = document.querySelectorAll(".todolist ul li");
+  const todoItems = getTodoItems();
   todoItems.forEach((item) => {
     if (item.classList.contains("completed")) {
       item.style.display = "block";
@@ -160,8 +154,8 @@ const showCompletedTodos = () => {
 
 // delete all completed todos
 const deleteCompletedTodos = () => {
-  const todoItems = document.querySelectorAll(".todolist ul li");
-
+  const todoItems = getTodoItems();
+  
   todoItems.forEach((item) => {
     if (item.classList.contains("completed")) {
       item.remove();
@@ -170,3 +164,11 @@ const deleteCompletedTodos = () => {
     }
   });
 };
+
+todoInput.addEventListener("keyup", addNewTodo);
+ulList.addEventListener("click", checkClick);
+ulList.addEventListener("dblclick", handleDoubleClick);
+ulList.addEventListener("keydown", handleKeyDown);
+buttons.forEach((button) => {
+  button.addEventListener("click", handleClick);
+});
