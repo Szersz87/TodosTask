@@ -40,6 +40,7 @@ const createTodosArea = (newTodo, text, id) => {
   const deleteBtn = createElementWithClass("button", "delete");
   deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
   textArea.textContent = text;
+  newTodo.dataset.id = id
   textArea.addEventListener("dblclick", handleDoubleClick);
   textArea.addEventListener("keydown", handleEditKeyDown);
   toolsPanel.append(checkBox, textArea, deleteBtn);
@@ -74,24 +75,24 @@ const handleDoubleClick = (e) => {
 //   funkcja zamykania okna edycji po kliknieciu entera
 const handleEditKeyDown = (e) => {
   const textArea = e.target.closest(".textArea");
-  
+
   if (e.key === "Enter") {
     e.preventDefault();
     textArea.contentEditable = false;
-    // blur, metoda ktora wymusza utrate focusu na elemencie
     textArea.blur();
-    
-    const listItem = textArea.closest("li");
-    const todoId = listItem.dataset.id;
+
+    const listItem = e.target.closest("li"); // move this line here
+    const todoId = Number(listItem.dataset.id); // use Number to convert string to number
     const index = tasks.findIndex((todo) => todo.id === todoId);
     if (index !== -1) {
       tasks[index].text = textArea.textContent;
       console.log(tasks);
     }
     isEditing = false;
-    
   }
 };
+    
+  
 ulList.addEventListener("keydown", (e) => {
   if (isEditing) {
     handleEditKeyDown(e);
