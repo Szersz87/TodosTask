@@ -54,6 +54,7 @@ const createTodosArea = (task) => {
     deleteTodoAndElement(task.id, newLi);
   });
   ulList.append(newLi);
+  tasks.push(newLi);
 };
 const findTaskIndexById = (id) => {
   return tasks.findIndex((task) => task.id === id);
@@ -73,8 +74,9 @@ const deleteElement = (element) => {
 
 const deleteTodoAndElement = (id, element) => {
   deleteTaskById(id);
-  deleteElement(element.parentNode);
+  deleteElement(element);
 };
+
 
 
 // funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
@@ -139,6 +141,7 @@ const handleClick = (e) => {
           }
         });
       };
+      
       
       const showAllTodos = () => {
         const todoItems = getTodoItems();
