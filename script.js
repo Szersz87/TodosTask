@@ -1,13 +1,13 @@
 // prepare DOM Elements
-
+document.addEventListener("DOMContentLoaded", () => {
 const todoInput = document.querySelector(".todo-input");
 const ulList = document.querySelector(".todolist ul");
 const buttons = document.querySelectorAll(
   ".btn-all, .btn-active, .btn-completed, .btn-deleteAllCompleted"
   );
-  const getTodoItems = () => tasks;
   
   const tasks = [];
+  const getTodoItems = () => tasks;
   
 
   // This function adds new todo, after press enter.
@@ -40,6 +40,7 @@ const createElementWithClass = (type, className) => {
 const createTodosArea = (task) => {
   const newLi = document.createElement("li");
   newLi.classList.add('newTodo');
+  newLi.setAttribute("data-id", task.id);
   
   newLi.innerHTML = `
     <div class="tools">
@@ -54,7 +55,7 @@ const createTodosArea = (task) => {
     deleteTodoAndElement(task.id, newLi);
   });
   ulList.append(newLi);
-  tasks.push(newLi);
+  
 };
 const findTaskIndexById = (id) => {
   return tasks.findIndex((task) => task.id === id);
@@ -134,7 +135,7 @@ const handleClick = (e) => {
 
       
       const applyToTodos = (condition, action) => {
-        const todoItems = getTodoItems();
+        const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
           if (condition(item)) {
             action(item);
@@ -142,27 +143,50 @@ const handleClick = (e) => {
         });
       };
       
-      
       const showAllTodos = () => {
-        const todoItems = getTodoItems();
-        todoItems.forEach((item) => {
-          item.style.display = "block";
+        applyToTodos(() => true, (listItem) => {
+          if (listItem) {
+            listItem.style.display = "block";
+          }
         });
       };
       
       const showActiveTodos = () => {
-        applyToTodos(item => !item.classList.contains("completed"), item => item.style.display = "block");
+        applyToTodos((item) => !item.classList.contains("completed"), (listItem) => {
+          if (listItem) {
+            listItem.style.display = "block";
+          }
+        });
+        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
+          if (listItem) {
+            listItem.style.display = "none";
+          }
+        });
       };
       
       const showCompletedTodos = () => {
-        applyToTodos(item => item.classList.contains("completed"), item => item.style.display = "block");
+        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
+          if (listItem) {
+            listItem.style.display = "block";
+          }
+        });
+        applyToTodos((item) => !item.classList.contains("completed"), (listItem) => {
+          if (listItem) {
+            listItem.style.display = "none";
+          }
+        });
       };
       
       const deleteCompletedTodos = () => {
-        applyToTodos(item => item.classList.contains("completed"), item => item.remove());
+        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
+          if (listItem) {
+            listItem.remove();
+          }
+        });
       };
       
       
+
       const elementsEvents = [
         { elements: [todoInput], event: "keyup", handler: addNewTodo },
         { elements: [ulList], event: "click", handler: checkClick },
@@ -178,3 +202,4 @@ const handleClick = (e) => {
       elementsEvents.forEach(({ elements, event, handler }) => {
         addEventListeners(elements, event, handler);
       });
+    })
