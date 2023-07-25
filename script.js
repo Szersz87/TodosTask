@@ -134,59 +134,36 @@ const handleClick = (e) => {
       };
 
       
-      const applyToTodos = (condition, trueAction, falseAction) => {
+      const applyToTodos = (condition) => {
         const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
           if (condition(item)) {
-            trueAction(item);
+            item.style.display = "block";
           } else {
-            falseAction(item);
+            item.style.display = "none";
           }
         });
       };
       
       const showAllTodos = () => {
-        applyToTodos(
-          () => true,
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-        );
+        applyToTodos(() => true);
       };
       
       const showActiveTodos = () => {
-        applyToTodos(
-          (item) => !item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
+        applyToTodos((item) => !item.classList.contains("completed"));
       };
       
       const showCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
+        applyToTodos((item) => item.classList.contains("completed"));
       };
       
       const deleteCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.remove();
-          },
-          () => {}
-        );
+        const completedItems = ulList.querySelectorAll("li.completed");
+        completedItems.forEach((item) => {
+          item.remove();
+        });
       };
+      
       
       
       
