@@ -7,7 +7,7 @@ const buttons = document.querySelectorAll(
   );
   
   const tasks = [];
-  const getTodoItems = () => tasks;
+
   
 
   // This function adds new todo, after press enter.
@@ -134,56 +134,60 @@ const handleClick = (e) => {
       };
 
       
-      const applyToTodos = (condition, action) => {
+      const applyToTodos = (condition, trueAction, falseAction) => {
         const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
           if (condition(item)) {
-            action(item);
+            trueAction(item);
+          } else {
+            falseAction(item);
           }
         });
       };
       
       const showAllTodos = () => {
-        applyToTodos(() => true, (listItem) => {
-          if (listItem) {
+        applyToTodos(
+          () => true,
+          (listItem) => {
             listItem.style.display = "block";
-          }
-        });
+          },
+        );
       };
       
       const showActiveTodos = () => {
-        applyToTodos((item) => !item.classList.contains("completed"), (listItem) => {
-          if (listItem) {
+        applyToTodos(
+          (item) => !item.classList.contains("completed"),
+          (listItem) => {
             listItem.style.display = "block";
-          }
-        });
-        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
-          if (listItem) {
+          },
+          (listItem) => {
             listItem.style.display = "none";
           }
-        });
+        );
       };
       
       const showCompletedTodos = () => {
-        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
-          if (listItem) {
+        applyToTodos(
+          (item) => item.classList.contains("completed"),
+          (listItem) => {
             listItem.style.display = "block";
-          }
-        });
-        applyToTodos((item) => !item.classList.contains("completed"), (listItem) => {
-          if (listItem) {
+          },
+          (listItem) => {
             listItem.style.display = "none";
           }
-        });
+        );
       };
       
       const deleteCompletedTodos = () => {
-        applyToTodos((item) => item.classList.contains("completed"), (listItem) => {
-          if (listItem) {
+        applyToTodos(
+          (item) => item.classList.contains("completed"),
+          (listItem) => {
             listItem.remove();
-          }
-        });
+          },
+          () => {}
+        );
       };
+      
       
       
 
