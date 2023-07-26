@@ -91,7 +91,6 @@ li:hover .delete{
     font-size: 1.2rem;
 }
 .editInfo {
-    color: rgba(175, 47, 47, 0.15);
     margin: 2rem;
     color: var(--main-color);
 }

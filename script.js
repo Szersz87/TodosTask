@@ -1,4 +1,3 @@
-// prepare DOM Elements
 document.addEventListener("DOMContentLoaded", () => {
 const todoInput = document.querySelector(".todo-input");
 const ulList = document.querySelector(".todolist ul");
@@ -112,13 +111,11 @@ const checkClick = (e) => {
 
 
 
+
+
 const handleClick = (e) => {
   const clickedButton = e.target;
-  
-  switch (true) {
-    case clickedButton.classList.contains("btn-all"):
-      showAllTodos();
-      break;
+
       case clickedButton.classList.contains("btn-active"):
       showActiveTodos();
       break;
@@ -207,3 +204,4 @@ const handleClick = (e) => {
         addEventListeners(elements, event, handler);
       });
     })
+
