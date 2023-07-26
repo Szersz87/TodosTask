@@ -109,89 +109,53 @@ const checkClick = (e) => {
   }
 };
 
-
-
-
-
 const handleClick = (e) => {
   const clickedButton = e.target;
   
   switch (true) {
     case clickedButton.classList.contains("btn-all"):
-      showAllTodos();
+      manageTodos("show-all");
       break;
       case clickedButton.classList.contains("btn-active"):
-      showActiveTodos();
+      manageTodos("show-active");
       break;
       case clickedButton.classList.contains("btn-completed"):
-      showCompletedTodos();
+      manageTodos("show-completed")
       break;
       case clickedButton.classList.contains("btn-deleteAllCompleted"):
-        deleteCompletedTodos();
+        manageTodos ("delete-completed")
         break;
         default:
           break;
         }
       };
 
-      
-      const applyToTodos = (condition, trueAction, falseAction) => {
+      const manageTodos = (action) => {
         const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
-          if (condition(item)) {
-            trueAction(item);
-          } else {
-            falseAction(item);
+          const completed = item.classList.contains("completed")
+          if (action == "show-all") {
+            item.style.display = "block";
+          } else if (action == "show-active") {
+            if (completed) {
+              item.style.display = "none";
+            } else {
+              item.style.display = "block";
+            }
+          } else if (action == "show-completed") {
+            if (completed) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          } else if (action == "delete-completed") {
+            if (completed) {
+              item.remove();
+            }
           }
         });
       };
       
-      const showAllTodos = () => {
-        applyToTodos(
-          () => true,
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-        );
-      };
-      
-      const showActiveTodos = () => {
-        applyToTodos(
-          (item) => !item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
-      };
-      
-      const showCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
-      };
-      
-      const deleteCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.remove();
-          },
-          () => {}
-        );
-      };
-      
-      
-      
-
       const elementsEvents = [
         { elements: [todoInput], event: "keyup", handler: addNewTodo },
         { elements: [ulList], event: "click", handler: checkClick },
