@@ -7,9 +7,6 @@ const buttons = document.querySelectorAll(
   
   const tasks = [];
 
-  
-
-  // This function adds new todo, after press enter.
   const addNewTodo = (e) => {
     e.preventDefault();
   
@@ -28,7 +25,6 @@ const buttons = document.querySelectorAll(
       }
     }
   };
-
 
 const createElementWithClass = (type, className) => {
   const element = document.createElement(type);
@@ -60,7 +56,6 @@ const findTaskIndexById = (id) => {
   return tasks.findIndex((task) => task.id === id);
 };
 
-
 const deleteTaskById = (id) => {
   const index = findTaskIndexById(id);
   if (index !== -1) {
@@ -77,10 +72,6 @@ const deleteTodoAndElement = (id, element) => {
   deleteElement(element);
 };
 
-
-
-// funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
-
 const handleDoubleClick = (e) => {
   if (e.target.classList.contains("textArea")) {
     e.target.contentEditable = true;
@@ -88,8 +79,6 @@ const handleDoubleClick = (e) => {
   }
 };
 
-
-//   funkcja zamykania okna edycji po kliknieciu entera
 const handleKeyDown = (e) => {
   if (e.key === "Enter" && e.target.contentEditable === "true") {
     e.preventDefault();
@@ -133,26 +122,28 @@ const handleClick = (e) => {
       const manageTodos = (action) => {
         const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
-          const completed = item.classList.contains("completed")
-          if (action == "show-all") {
-            item.style.display = "block";
-          } else if (action == "show-active") {
-            if (completed) {
-              item.style.display = "none";
-            } else {
-              item.style.display = "block";
-            }
-          } else if (action == "show-completed") {
-            if (completed) {
-              item.style.display = "block";
-            } else {
-              item.style.display = "none";
-            }
-          } else if (action == "delete-completed") {
-            if (completed) {
-              item.remove();
-            }
+          const completed = item.classList.contains("completed");
+      
+          let displayStyle;
+      
+          switch (action) {
+            case "show-all":
+              displayStyle = "block";
+              break;
+            case "show-active":
+              displayStyle = completed ? "none" : "block";
+              break;
+            case "show-completed":
+              displayStyle = completed ? "block" : "none";
+              break;
+            case "delete-completed":
+              if (completed) {
+                item.remove();
+              }
+              return; 
           }
+      
+          item.style.display = displayStyle;
         });
       };
       
