@@ -7,9 +7,6 @@ const buttons = document.querySelectorAll(
   
   const tasks = [];
 
-  
-
-  // This function adds new todo, after press enter.
   const addNewTodo = (e) => {
     e.preventDefault();
   
@@ -28,7 +25,6 @@ const buttons = document.querySelectorAll(
       }
     }
   };
-
 
 const createElementWithClass = (type, className) => {
   const element = document.createElement(type);
@@ -60,7 +56,6 @@ const findTaskIndexById = (id) => {
   return tasks.findIndex((task) => task.id === id);
 };
 
-
 const deleteTaskById = (id) => {
   const index = findTaskIndexById(id);
   if (index !== -1) {
@@ -77,10 +72,6 @@ const deleteTodoAndElement = (id, element) => {
   deleteElement(element);
 };
 
-
-
-// funkcja doubleClicka, jesli klikniemy na tekst w divie w li, uruchomimy edycje tekstu
-
 const handleDoubleClick = (e) => {
   if (e.target.classList.contains("textArea")) {
     e.target.contentEditable = true;
@@ -88,8 +79,6 @@ const handleDoubleClick = (e) => {
   }
 };
 
-
-//   funkcja zamykania okna edycji po kliknieciu entera
 const handleKeyDown = (e) => {
   if (e.key === "Enter" && e.target.contentEditable === "true") {
     e.preventDefault();
@@ -109,89 +98,55 @@ const checkClick = (e) => {
   }
 };
 
-
-
-
-
 const handleClick = (e) => {
   const clickedButton = e.target;
   
   switch (true) {
     case clickedButton.classList.contains("btn-all"):
-      showAllTodos();
+      manageTodos("show-all");
       break;
       case clickedButton.classList.contains("btn-active"):
-      showActiveTodos();
+      manageTodos("show-active");
       break;
       case clickedButton.classList.contains("btn-completed"):
-      showCompletedTodos();
+      manageTodos("show-completed")
       break;
       case clickedButton.classList.contains("btn-deleteAllCompleted"):
-        deleteCompletedTodos();
+        manageTodos ("delete-completed")
         break;
         default:
           break;
         }
       };
 
-      
-      const applyToTodos = (condition, trueAction, falseAction) => {
+      const manageTodos = (action) => {
         const todoItems = ulList.querySelectorAll("li[data-id]");
         todoItems.forEach((item) => {
-          if (condition(item)) {
-            trueAction(item);
-          } else {
-            falseAction(item);
+          const completed = item.classList.contains("completed");
+      
+          let displayStyle;
+      
+          switch (action) {
+            case "show-all":
+              displayStyle = "block";
+              break;
+            case "show-active":
+              displayStyle = completed ? "none" : "block";
+              break;
+            case "show-completed":
+              displayStyle = completed ? "block" : "none";
+              break;
+            case "delete-completed":
+              if (completed) {
+                item.remove();
+              }
+              return; 
           }
+      
+          item.style.display = displayStyle;
         });
       };
       
-      const showAllTodos = () => {
-        applyToTodos(
-          () => true,
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-        );
-      };
-      
-      const showActiveTodos = () => {
-        applyToTodos(
-          (item) => !item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
-      };
-      
-      const showCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.style.display = "block";
-          },
-          (listItem) => {
-            listItem.style.display = "none";
-          }
-        );
-      };
-      
-      const deleteCompletedTodos = () => {
-        applyToTodos(
-          (item) => item.classList.contains("completed"),
-          (listItem) => {
-            listItem.remove();
-          },
-          () => {}
-        );
-      };
-      
-      
-      
-
       const elementsEvents = [
         { elements: [todoInput], event: "keyup", handler: addNewTodo },
         { elements: [ulList], event: "click", handler: checkClick },
